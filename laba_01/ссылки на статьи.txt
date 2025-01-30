@@ -1,0 +1,5 @@
+# Как устроен AES
+https://habr.com/ru/articles/112733/
+
+#AES-128. Детали и реализация на python
+https://habr.com/ru/articles/212235/
