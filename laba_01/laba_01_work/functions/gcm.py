@@ -25,7 +25,14 @@ def ghash(h, data):
 def gcm_encrypt(plaintext, key, iv, aad=b''):
     """Шифрование в режиме GCM"""
     block_size = 16
-    plaintext_bytes = plaintext.encode('utf-8')
+
+    if isinstance(plaintext, str):
+        plaintext_bytes = plaintext.encode('utf-8')
+    elif isinstance(plaintext, bytes):
+        plaintext_bytes = plaintext
+    else:
+        raise ValueError("plaintext должен быть строкой или байтами")
+
     key_bytes = key.encode('utf-8')
     iv_bytes = iv.encode('utf-8')
 

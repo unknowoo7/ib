@@ -8,7 +8,14 @@ def pad_text(text, block_size):
 def ecb_encrypt(plaintext, key):
     """Шифрование в режиме ECB"""
     block_size = 8
-    plaintext_bytes = plaintext.encode('utf-8')
+    # Если plaintext - строка, преобразуем в байты, иначе считаем, что это уже байты
+    if isinstance(plaintext, str):
+        plaintext_bytes = plaintext.encode('utf-8')
+    elif isinstance(plaintext, bytes):
+        plaintext_bytes = plaintext
+    else:
+        raise ValueError("plaintext должен быть строкой или байтами")
+
     key_bytes = key.encode('utf-8')
 
     if len(key_bytes) < block_size:

@@ -21,25 +21,12 @@ def cbc_encrypt(plaintext, key, iv):
     else:
         raise ValueError("plaintext должен быть строкой или байтами")
 
-    # Обработка ключа
-    if isinstance(key, str):
-        key_bytes = key.encode('utf-8')
-    elif isinstance(key, bytes):
-        key_bytes = key
-    else:
-        raise ValueError("key должен быть строкой или байтами")
+    key_bytes = key.encode('utf-8')
+    iv_bytes = iv.encode('utf-8')
 
     if len(key_bytes) < block_size:
         key_bytes = key_bytes + b'\x00' * (block_size - len(key_bytes))
     key_bytes = key_bytes[:block_size]
-
-    # Обработка инициализирующего вектора (IV)
-    if isinstance(iv, str):
-        iv_bytes = iv.encode('utf-8')
-    elif isinstance(iv, bytes):
-        iv_bytes = iv
-    else:
-        raise ValueError("iv должен быть строкой или байтами")
 
     if len(iv_bytes) < block_size:
         iv_bytes = iv_bytes + b'\x00' * (block_size - len(iv_bytes))
@@ -51,7 +38,6 @@ def cbc_encrypt(plaintext, key, iv):
     ciphertext = b''
     previous_block = iv_bytes
 
-    # Шифрование по блокам
     for i in range(0, len(padded_data), block_size):
         block = padded_data[i:i + block_size]
         block_xor = xor_bytes(block, previous_block)

@@ -6,7 +6,14 @@ def xor_bytes(a, b):
 def cfb_encrypt(plaintext, key, iv, segment_size=1):
     """Шифрование в режиме CFB"""
     block_size = 8
-    plaintext_bytes = plaintext.encode('utf-8')
+
+    if isinstance(plaintext, str):
+        plaintext_bytes = plaintext.encode('utf-8')
+    elif isinstance(plaintext, bytes):
+        plaintext_bytes = plaintext
+    else:
+        raise ValueError("plaintext должен быть строкой или байтами")
+
     key_bytes = key.encode('utf-8')
     iv_bytes = iv.encode('utf-8')
 

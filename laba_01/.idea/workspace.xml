@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e4896e23-3832-4667-9bc0-d9519166a214" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laba_01_hint/cbc.txt" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_hint/cbc.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laba_01_work/functions/cbc.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/functions/cbc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laba_01_work/functions/cfb.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/functions/cfb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laba_01_work/functions/ecb.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/functions/ecb.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laba_01_work/functions/gcm.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/functions/gcm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/laba_01_work/functions/ofb.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/functions/ofb.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/laba_01_work/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,12 +39,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.gcm.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/ЧГУ/4 курс/8 семестр/ИБ/laba_01/laba_01_work/functions"
+    "last_opened_file_path": "D:/ЧГУ/4 курс/8 семестр/ИБ/laba_01/laba_01_work/functions",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
   <component name="RecentsManager">
