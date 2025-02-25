@@ -6,12 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e4896e23-3832-4667-9bc0-d9519166a214" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laba_01_work/functions/cbc.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/functions/cbc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laba_01_work/functions/cfb.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/functions/cfb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laba_01_work/functions/ecb.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/functions/ecb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laba_01_work/functions/gcm.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/functions/gcm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laba_01_work/functions/ofb.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/functions/ofb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laba_01_work/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
