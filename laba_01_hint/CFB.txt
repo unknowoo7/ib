@@ -1,0 +1,82 @@
+def xor_bytes(a, b):
+    """Выполняет побитовое XOR двух байтовых строк"""
+    return bytes(x ^ y for x, y in zip(a, b))
+
+def cfb_encrypt(plaintext, key, iv, segment_size=1):
+    """Шифрование в режиме CFB"""
+    block_size = 8  # Размер блока в байтах
+    # Преобразуем текст, ключ и IV в байты
+    plaintext_bytes = plaintext.encode('utf-8')
+    key_bytes = key.encode('utf-8')
+    iv_bytes = iv.encode('utf-8')
+    
+    # Убедимся, что ключ и IV соответствуют размеру блока
+    if len(key_bytes) < block_size:
+        key_bytes = key_bytes + b'\x00' * (block_size - len(key_bytes))
+    key_bytes = key_bytes[:block_size]
+    
+    if len(iv_bytes) < block_size:
+        iv_bytes = iv_bytes + b'\x00' * (block_size - len(iv_bytes))
+    iv_bytes = iv_bytes[:block_size]
+    
+    ciphertext = b''
+    shift_register = iv_bytes  # Изначально используем IV
+    
+    # Шифруем побайтно или по сегментам
+    for i in range(0, len(plaintext_bytes), segment_size):
+        # Шифруем текущий shift_register с ключом
+        encrypted_block = xor_bytes(shift_register, key_bytes)
+        # Берем сегмент открытого текста
+        plaintext_segment = plaintext_bytes[i:i + segment_size]
+        # XOR с зашифрованным блоком (берем только нужное количество байт)
+        ciphertext_segment = xor_bytes(plaintext_segment, encrypted_block[:segment_size])
+        ciphertext += ciphertext_segment
+        
+        # Сдвигаем регистр и добавляем зашифрованный сегмент
+        shift_register = shift_register[segment_size:] + ciphertext_segment
+    
+    return ciphertext
+
+def cfb_decrypt(ciphertext, key, iv, segment_size=1):
+    """Дешифрование в режиме CFB"""
+    block_size = 8
+    key_bytes = key.encode('utf-8')
+    iv_bytes = iv.encode('utf-8')
+    
+    if len(key_bytes) < block_size:
+        key_bytes = key_bytes + b'\x00' * (block_size - len(key_bytes))
+    key_bytes = key_bytes[:block_size]
+    
+    if len(iv_bytes) < block_size:
+        iv_bytes = iv_bytes + b'\x00' * (block_size - len(iv_bytes))
+    iv_bytes = iv_bytes[:block_size]
+    
+    plaintext_bytes = b''
+    shift_register = iv_bytes  # Изначально используем IV
+    
+    # Дешифруем побайтно или по сегментам
+    for i in range(0, len(ciphertext), segment_size):
+        # Шифруем текущий shift_register с ключом
+        encrypted_block = xor_bytes(shift_register, key_bytes)
+        # Берем сегмент зашифрованного текста
+        ciphertext_segment = ciphertext[i:i + segment_size]
+        # XOR с зашифрованным блоком для восстановления текста
+        plaintext_segment = xor_bytes(ciphertext_segment, encrypted_block[:segment_size])
+        plaintext_bytes += plaintext_segment
+        
+        # Сдвигаем регистр и добавляем зашифрованный сегмент
+        shift_register = shift_register[segment_size:] + ciphertext_segment
+    
+    return plaintext_bytes.decode('utf-8')
+
+# Пример использования
+plaintext = "Hello, CFB mode!"
+key = "secretkey"
+iv = "initialiv"  # Вектор инициализации
+segment_size = 1  # Размер сегмента (1 байт для побайтового шифрования)
+encrypted = cfb_encrypt(plaintext, key, iv, segment_size)
+decrypted = cfb_decrypt(encrypted, key, iv, segment_size)
+
+print(f"Исходный текст: {plaintext}")
+print(f"Зашифрованный текст: {encrypted.hex()}")
+print(f"Расшифрованный текст: {decrypted}")

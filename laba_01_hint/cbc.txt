@@ -1,0 +1,89 @@
+def pad_text(text, block_size):
+    """Дополняет текст до длины, кратной block_size"""
+    padding_len = block_size - (len(text) % block_size)
+    padding = bytes([padding_len] * padding_len)
+    return text + padding
+
+def xor_bytes(a, b):
+    """Выполняет побитовое XOR двух байтовых строк одинаковой длины"""
+    return bytes(x ^ y for x, y in zip(a, b))
+
+def cbc_encrypt(plaintext, key, iv):
+    """Шифрование в режиме CBC"""
+    block_size = 8  # Размер блока в байтах
+    # Преобразуем текст, ключ и IV в байты
+    plaintext_bytes = plaintext.encode('utf-8')
+    key_bytes = key.encode('utf-8')
+    iv_bytes = iv.encode('utf-8')
+    
+    # Убедимся, что ключ и IV соответствуют размеру блока
+    if len(key_bytes) < block_size:
+        key_bytes = key_bytes + b'\x00' * (block_size - len(key_bytes))
+    key_bytes = key_bytes[:block_size]
+    
+    if len(iv_bytes) < block_size:
+        iv_bytes = iv_bytes + b'\x00' * (block_size - len(iv_bytes))
+    iv_bytes = iv_bytes[:block_size]
+    
+    # Дополняем текст
+    padded_text = pad_text(plaintext_bytes, block_size)
+    
+    ciphertext = b''
+    previous_block = iv_bytes  # Начинаем с IV
+    
+    # Шифруем каждый блок
+    for i in range(0, len(padded_text), block_size):
+        block = padded_text[i:i + block_size]
+        # XOR блока с предыдущим зашифрованным блоком (или IV для первого)
+        block_xor = xor_bytes(block, previous_block)
+        # Шифруем результат с ключом
+        encrypted_block = xor_bytes(block_xor, key_bytes)
+        ciphertext += encrypted_block
+        previous_block = encrypted_block  # Обновляем предыдущий блок
+    
+    return ciphertext
+
+def cbc_decrypt(ciphertext, key, iv):
+    """Дешифрование в режиме CBC"""
+    block_size = 8
+    key_bytes = key.encode('utf-8')
+    iv_bytes = iv.encode('utf-8')
+    
+    if len(key_bytes) < block_size:
+        key_bytes = key_bytes + b'\x00' * (block_size - len(key_bytes))
+    key_bytes = key_bytes[:block_size]
+    
+    if len(iv_bytes) < block_size:
+        iv_bytes = iv_bytes + b'\x00' * (block_size - len(iv_bytes))
+    iv_bytes = iv_bytes[:block_size]
+    
+    plaintext_bytes = b''
+    previous_block = iv_bytes  # Начинаем с IV
+    
+    # Дешифруем каждый блок
+    for i in range(0, len(ciphertext), block_size):
+        block = ciphertext[i:i + block_size]
+        # Дешифруем блок с ключом
+        decrypted_block = xor_bytes(block, key_bytes)
+        # XOR с предыдущим зашифрованным блоком (или IV для первого)
+        plaintext_block = xor_bytes(decrypted_block, previous_block)
+        plaintext_bytes += plaintext_block
+        previous_block = block  # Обновляем предыдущий блок
+    
+    # Удаляем дополнение
+    padding_len = plaintext_bytes[-1]
+    if padding_len <= block_size:
+        plaintext_bytes = plaintext_bytes[:-padding_len]
+    
+    return plaintext_bytes.decode('utf-8')
+
+# Пример использования
+plaintext = "Hello, CBC mode!"
+key = "secretkey"
+iv = "initialiv"  # Вектор инициализации
+encrypted = cbc_encrypt(plaintext, key, iv)
+decrypted = cbc_decrypt(encrypted, key, iv)
+
+print(f"Исходный текст: {plaintext}")
+print(f"Зашифрованный текст: {encrypted.hex()}")
+print(f"Расшифрованный текст: {decrypted}")

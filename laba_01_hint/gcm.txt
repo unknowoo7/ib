@@ -1,0 +1,115 @@
+def xor_bytes(a, b):
+    """Выполняет побитовое XOR двух байтовых строк"""
+    return bytes(x ^ y for x, y in zip(a, b))
+
+def inc_counter(counter):
+    """Увеличивает 32-битный счётчик в конце блока"""
+    counter_int = int.from_bytes(counter[-4:], 'big')
+    counter_int = (counter_int + 1) & 0xFFFFFFFF  # Ограничиваем 32 битами
+    return counter[:-4] + counter_int.to_bytes(4, 'big')
+
+def ghash(h, data):
+    """Упрощённая имитация GHASH (XOR вместо умножения в поле Галуа)"""
+    block_size = 16  # GCM работает с 128-битными блоками
+    result = bytes(block_size)
+    
+    # Дополняем данные до кратности 16 байт
+    if len(data) % block_size != 0:
+        data += b'\x00' * (block_size - len(data) % block_size)
+    
+    # XOR всех блоков с H (в реальной GCM — умножение в GF(2^128))
+    for i in range(0, len(data), block_size):
+        block = data[i:i + block_size]
+        result = xor_bytes(result, block)
+    
+    return xor_bytes(result, h)  # Упрощённая имитация
+
+def gcm_encrypt(plaintext, key, iv, aad=b''):
+    """Шифрование в режиме GCM"""
+    block_size = 16  # Размер блока в байтах (128 бит)
+    # Преобразуем входные данные в байты
+    plaintext_bytes = plaintext.encode('utf-8')
+    key_bytes = key.encode('utf-8')
+    iv_bytes = iv.encode('utf-8')
+    
+    # Убедимся, что ключ и IV подходят
+    if len(key_bytes) < block_size:
+        key_bytes = key_bytes + b'\x00' * (block_size - len(key_bytes))
+    key_bytes = key_bytes[:block_size]
+    
+    # Формируем начальный счётчик (IV + 32-битный счётчик)
+    if len(iv_bytes) != 12:  # Стандартный размер IV для GCM — 96 бит (12 байт)
+        iv_bytes = iv_bytes.ljust(12, b'\x00')[:12]
+    counter = iv_bytes + b'\x00\x00\x00\x01'  # Начальное значение счётчика
+    
+    # "Шифруем" H (в реальной GCM H = AES(0) с ключом)
+    h = xor_bytes(bytes(block_size), key_bytes)  # Упрощённый H
+    
+    ciphertext = b''
+    # Шифрование в режиме CTR
+    for i in range(0, len(plaintext_bytes), block_size):
+        # "Шифруем" счётчик с ключом (имитация AES)
+        keystream = xor_bytes(counter, key_bytes)
+        plaintext_block = plaintext_bytes[i:i + block_size]
+        # XOR с открытым текстом
+        ciphertext_block = xor_bytes(plaintext_block, keystream[:len(plaintext_block)])
+        ciphertext += ciphertext_block
+        counter = inc_counter(counter)
+    
+    # Вычисляем тег аутентификации
+    # Формат: AAD || Ciphertext || Длина AAD || Длина Ciphertext (в битах)
+    len_aad = len(aad) * 8
+    len_ciphertext = len(ciphertext) * 8
+    auth_data = aad + ciphertext + len_aad.to_bytes(8, 'big') + len_ciphertext.to_bytes(8, 'big')
+    tag = ghash(h, auth_data)
+    
+    return ciphertext, tag
+
+def gcm_decrypt(ciphertext, key, iv, aad, tag):
+    """Дешифрование в режиме GCM"""
+    block_size = 16
+    key_bytes = key.encode('utf-8')
+    iv_bytes = iv.encode('utf-8')
+    
+    if len(key_bytes) < block_size:
+        key_bytes = key_bytes + b'\x00' * (block_size - len(key_bytes))
+    key_bytes = key_bytes[:block_size]
+    
+    if len(iv_bytes) != 12:
+        iv_bytes = iv_bytes.ljust(12, b'\x00')[:12]
+    counter = iv_bytes + b'\x00\x00\x00\x01'
+    
+    h = xor_bytes(bytes(block_size), key_bytes)  # Упрощённый H
+    
+    plaintext_bytes = b''
+    # Дешифрование в режиме CTR
+    for i in range(0, len(ciphertext), block_size):
+        keystream = xor_bytes(counter, key_bytes)
+        ciphertext_block = ciphertext[i:i + block_size]
+        plaintext_block = xor_bytes(ciphertext_block, keystream[:len(ciphertext_block)])
+        plaintext_bytes += plaintext_block
+        counter = inc_counter(counter)
+    
+    # Проверяем тег
+    len_aad = len(aad) * 8
+    len_ciphertext = len(ciphertext) * 8
+    auth_data = aad + ciphertext + len_aad.to_bytes(8, 'big') + len_ciphertext.to_bytes(8, 'big')
+    computed_tag = ghash(h, auth_data)
+    
+    if computed_tag != tag:
+        raise ValueError("Тег аутентификации не совпадает — данные повреждены или подделаны")
+    
+    return plaintext_bytes.decode('utf-8')
+
+# Пример использования
+plaintext = "Hello, GCM mode!"
+key = "secretkey1234567"  # 16 байт
+iv = "initialiv123"      # 12 байт
+aad = b"extra data"       # Дополнительные аутентифицируемые данные
+encrypted, tag = gcm_encrypt(plaintext, key, iv, aad)
+decrypted = gcm_decrypt(encrypted, key, iv, aad, tag)
+
+print(f"Исходный текст: {plaintext}")
+print(f"Зашифрованный текст: {encrypted.hex()}")
+print(f"Тег: {tag.hex()}")
+print(f"Расшифрованный текст: {decrypted}")

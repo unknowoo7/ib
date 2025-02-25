@@ -1,0 +1,81 @@
+def xor_bytes(a, b):
+    """Выполняет побитовое XOR двух байтовых строк"""
+    return bytes(x ^ y for x, y in zip(a, b))
+
+def ofb_encrypt(plaintext, key, iv):
+    """Шифрование в режиме OFB"""
+    block_size = 8  # Размер блока в байтах
+    # Преобразуем текст, ключ и IV в байты
+    plaintext_bytes = plaintext.encode('utf-8')
+    key_bytes = key.encode('utf-8')
+    iv_bytes = iv.encode('utf-8')
+    
+    # Убедимся, что ключ и IV соответствуют размеру блока
+    if len(key_bytes) < block_size:
+        key_bytes = key_bytes + b'\x00' * (block_size - len(key_bytes))
+    key_bytes = key_bytes[:block_size]
+    
+    if len(iv_bytes) < block_size:
+        iv_bytes = iv_bytes + b'\x00' * (block_size - len(iv_bytes))
+    iv_bytes = iv_bytes[:block_size]
+    
+    ciphertext = b''
+    shift_register = iv_bytes  # Изначально используем IV
+    
+    # Шифруем побайтно
+    for i in range(len(plaintext_bytes)):
+        # Шифруем текущий shift_register с ключом
+        keystream_block = xor_bytes(shift_register, key_bytes)
+        # Берем 1 байт открытого текста
+        plaintext_byte = plaintext_bytes[i:i + 1]
+        # XOR с соответствующим байтом потока ключей
+        ciphertext_byte = xor_bytes(plaintext_byte, keystream_block[:1])
+        ciphertext += ciphertext_byte
+        
+        # Обновляем регистр, используя зашифрованный выход
+        shift_register = keystream_block
+    
+    return ciphertext
+
+def ofb_decrypt(ciphertext, key, iv):
+    """Дешифрование в режиме OFB"""
+    block_size = 8
+    key_bytes = key.encode('utf-8')
+    iv_bytes = iv.encode('utf-8')
+    
+    if len(key_bytes) < block_size:
+        key_bytes = key_bytes + b'\x00' * (block_size - len(key_bytes))
+    key_bytes = key_bytes[:block_size]
+    
+    if len(iv_bytes) < block_size:
+        iv_bytes = iv_bytes + b'\x00' * (block_size - len(iv_bytes))
+    iv_bytes = iv_bytes[:block_size]
+    
+    plaintext_bytes = b''
+    shift_register = iv_bytes  # Изначально используем IV
+    
+    # Дешифруем побайтно
+    for i in range(len(ciphertext)):
+        # Шифруем текущий shift_register с ключом
+        keystream_block = xor_bytes(shift_register, key_bytes)
+        # Берем 1 байт зашифрованного текста
+        ciphertext_byte = ciphertext[i:i + 1]
+        # XOR с соответствующим байтом потока ключей
+        plaintext_byte = xor_bytes(ciphertext_byte, keystream_block[:1])
+        plaintext_bytes += plaintext_byte
+        
+        # Обновляем регистр, используя зашифрованный выход
+        shift_register = keystream_block
+    
+    return plaintext_bytes.decode('utf-8')
+
+# Пример использования
+plaintext = "Hello, OFB mode!"
+key = "secretkey"
+iv = "initialiv"  # Вектор инициализации
+encrypted = ofb_encrypt(plaintext, key, iv)
+decrypted = ofb_decrypt(encrypted, key, iv)
+
+print(f"Исходный текст: {plaintext}")
+print(f"Зашифрованный текст: {encrypted.hex()}")
+print(f"Расшифрованный текст: {decrypted}")
