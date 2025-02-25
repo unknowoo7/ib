@@ -9,37 +9,54 @@ def xor_bytes(a, b):
     return bytes(x ^ y for x, y in zip(a, b))
 
 def cbc_encrypt(plaintext, key, iv):
-    """Шифрование в режиме CBC"""
-    block_size = 8  # Размер блока в байтах
-    # Преобразуем текст, ключ и IV в байты
-    plaintext_bytes = plaintext.encode('utf-8')
-    key_bytes = key.encode('utf-8')
-    iv_bytes = iv.encode('utf-8')
-    
-    # Убедимся, что ключ и IV соответствуют размеру блока
+    """Шифрование в режиме CBC (принимает как текст, так и бинарные данные)"""
+    block_size = 8
+
+    # Если plaintext - строка, преобразуем в байты, иначе считаем, что это уже байты
+    if isinstance(plaintext, str):
+        plaintext_bytes = plaintext.encode('utf-8')
+    elif isinstance(plaintext, bytes):
+        plaintext_bytes = plaintext
+    else:
+        raise ValueError("plaintext должен быть строкой или байтами")
+
+    # Обработка ключа
+    if isinstance(key, str):
+        key_bytes = key.encode('utf-8')
+    elif isinstance(key, bytes):
+        key_bytes = key
+    else:
+        raise ValueError("key должен быть строкой или байтами")
+
     if len(key_bytes) < block_size:
         key_bytes = key_bytes + b'\x00' * (block_size - len(key_bytes))
     key_bytes = key_bytes[:block_size]
-    
+
+    # Обработка инициализирующего вектора (IV)
+    if isinstance(iv, str):
+        iv_bytes = iv.encode('utf-8')
+    elif isinstance(iv, bytes):
+        iv_bytes = iv
+    else:
+        raise ValueError("iv должен быть строкой или байтами")
+
     if len(iv_bytes) < block_size:
         iv_bytes = iv_bytes + b'\x00' * (block_size - len(iv_bytes))
     iv_bytes = iv_bytes[:block_size]
-    
-    # Дополняем текст
-    padded_text = pad_text(plaintext_bytes, block_size)
-    
+
+    # Дополнение данных
+    padded_data = pad_text(plaintext_bytes, block_size)
+
     ciphertext = b''
-    previous_block = iv_bytes  # Начинаем с IV
-    
-    # Шифруем каждый блок
-    for i in range(0, len(padded_text), block_size):
-        block = padded_text[i:i + block_size]
-        # XOR блока с предыдущим зашифрованным блоком (или IV для первого)
+    previous_block = iv_bytes
+
+    # Шифрование по блокам
+    for i in range(0, len(padded_data), block_size):
+        block = padded_data[i:i + block_size]
         block_xor = xor_bytes(block, previous_block)
-        # Шифруем результат с ключом
         encrypted_block = xor_bytes(block_xor, key_bytes)
         ciphertext += encrypted_block
-        previous_block = encrypted_block  # Обновляем предыдущий блок
+        previous_block = encrypted_block
     
     return ciphertext
 
