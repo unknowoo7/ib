@@ -5,10 +5,10 @@ from functions.gcm import *
 from functions.ofb import *
 
 
-plaintext = "Hello, my super world!"
+plaintext = "Hello Hello"
 key = "secretkey"
 iv = "randomiv"
-bin_data = b'Hello, world!'
+bin_data = b'Hello Hello'
 
 cbc = cbc_encrypt(plaintext, key, iv)
 cfb = cfb_encrypt(plaintext, key, iv)
