@@ -5,9 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e4896e23-3832-4667-9bc0-d9519166a214" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/laba_01_work/main_2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../laba_02/demo_math.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../laba_02/h.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../laba_02/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../laba_02/zadanie.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../laba_01.zip" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/laba_01_work/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/laba_01_work/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/~$чёт лабораторная работа №1.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/~$чёт по лабораторной работе №1. Версия №2.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Отчёт лабораторная работа №1.docx" beforeDir="false" afterPath="$PROJECT_DIR$/Отчёт лабораторная работа №1.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Отчёт по лабораторной работе №1. Версия №2.docx" beforeDir="false" afterPath="$PROJECT_DIR$/Отчёт по лабораторной работе №1. Версия №2.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../~$адания.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../~$адания.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Задания.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../Задания.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,28 +33,29 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2tXHOACC5ZQmBeUiFPp843GBXNc" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.gcm.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.ofb.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/ЧГУ/4 курс/8 семестр/ИБ/laba_01/laba_01_work/functions",
-    "settings.editor.selected.configurable": "preferences.keymap"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.gcm.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ofb.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/ЧГУ/4 курс/8 семестр/ИБ/laba_02&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\ЧГУ\4 курс\8 семестр\ИБ\laba_01\laba_01_work\functions" />
@@ -54,7 +64,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-fc1d50d2d915-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.24978.54" />
+        <option value="bundled-python-sdk-14705d77f0bb-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.25659.43" />
       </set>
     </attachedChunks>
   </component>
