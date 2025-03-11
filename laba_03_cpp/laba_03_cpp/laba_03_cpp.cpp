@@ -118,6 +118,7 @@ string sha1(const string& message) {
 int main() {
     setlocale(LC_ALL, "");
     
+
     auto start = std::chrono::high_resolution_clock::now();
     string hash = sha1("Hello, world!");
     auto stop = std::chrono::high_resolution_clock::now();

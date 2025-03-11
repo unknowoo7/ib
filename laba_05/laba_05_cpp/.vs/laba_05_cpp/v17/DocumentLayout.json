@@ -1,12 +1,37 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\\u0427\u0413\u0423\\4 \u043A\u0443\u0440\u0441\\8 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\ib\\laba_05\\laba_05_cpp\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6B3AA51B-0403-4950-A4AE-3E69F8F1CEDA}|laba_05_cpp\\laba_05_cpp.vcxproj|D:\\\u0427\u0413\u0423\\4 \u043A\u0443\u0440\u0441\\8 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\ib\\laba_05\\laba_05_cpp\\laba_05_cpp\\laba_05_cpp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{6B3AA51B-0403-4950-A4AE-3E69F8F1CEDA}|laba_05_cpp\\laba_05_cpp.vcxproj|solutionrelative:laba_05_cpp\\laba_05_cpp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "laba_05_cpp.cpp",
+              "DocumentMoniker": "D:\\\u0427\u0413\u0423\\4 \u043A\u0443\u0440\u0441\\8 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\ib\\laba_05\\laba_05_cpp\\laba_05_cpp\\laba_05_cpp.cpp",
+              "RelativeDocumentMoniker": "laba_05_cpp\\laba_05_cpp.cpp",
+              "ToolTip": "D:\\\u0427\u0413\u0423\\4 \u043A\u0443\u0440\u0441\\8 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\ib\\laba_05\\laba_05_cpp\\laba_05_cpp\\laba_05_cpp.cpp",
+              "RelativeToolTip": "laba_05_cpp\\laba_05_cpp.cpp",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAAwKcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-11T11:12:50.947Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
